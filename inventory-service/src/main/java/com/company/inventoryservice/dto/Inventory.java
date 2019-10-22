@@ -3,7 +3,7 @@ package com.company.inventoryservice.dto;
 import java.util.Objects;
 
 public class Inventory {
-    private int id;
+    private int inventory_id;
     private Integer product_id;
     private Integer quantity;
 
@@ -14,12 +14,12 @@ public class Inventory {
 
     public Inventory(){}
 
-    public int getId() {
-        return id;
+    public int getInventory_id() {
+        return inventory_id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setInventory_id(int inventory_id) {
+        this.inventory_id = inventory_id;
     }
 
     public Integer getProduct_id() {
@@ -43,13 +43,13 @@ public class Inventory {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Inventory inventory = (Inventory) o;
-        return id == inventory.id &&
+        return inventory_id == inventory.inventory_id &&
                 product_id.equals(inventory.product_id) &&
                 quantity.equals(inventory.quantity);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, product_id, quantity);
+        return Objects.hash(inventory_id, product_id, quantity);
     }
 }

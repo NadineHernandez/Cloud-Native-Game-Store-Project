@@ -2,34 +2,63 @@ package com.company.inventoryservice.controller;
 
 import com.company.inventoryservice.dto.Inventory;
 import com.company.inventoryservice.dto.InventoryViewModel;
+import com.company.inventoryservice.service.InventoryServiceLayer;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
 import java.util.List;
 
+@RefreshScope
+@RestController
 public class InventoryController {
+    @Autowired
+    InventoryServiceLayer serviceLayer;
+
     @PostMapping(value = "/inventory")
     @ResponseStatus(HttpStatus.CREATED)
-    public Inventory addInventory(@RequestBody @Valid InventoryViewModel ivm){
-        return null;
+    public InventoryViewModel addInventory(@RequestBody @Valid InventoryViewModel ivm){
+        return serviceLayer.createInventory(ivm);
     }
 
     @GetMapping(value = "/inventory")
     @ResponseStatus(HttpStatus.OK)
-    public List<Inventory> getAllInventories(){
-        return null;
+    public List<InventoryViewModel> getAllInventories(){
+        try{
+            int tester = serviceLayer.findAllInventories().get(0).getInventory_id();
+        } catch (Exception e){
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "No Inventories found", e
+            );
+        }
+        return serviceLayer.findAllInventories();
     }
 
     @GetMapping(value = "/inventory/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Inventory getInventory(@PathVariable int id){
-        return null;
+    public InventoryViewModel getInventory(@PathVariable int id){
+        try{
+            int tester = serviceLayer.findInventory(id).getInventory_id();
+        }catch (Exception e){
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "No Inventory found with id: " + id, e
+            );
+        }
+        return serviceLayer.findInventory(id);
     }
 
     @PutMapping(value = "/inventory")
     @ResponseStatus(HttpStatus.OK)
     public void updateInventory(@RequestBody @Valid InventoryViewModel ivm){
+        serviceLayer.updateInventory(ivm);
+    }
 
+    @DeleteMapping(value = "/inventory/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteInvoice(@PathVariable int id){
+        serviceLayer.deleteInventory(id);
     }
 }

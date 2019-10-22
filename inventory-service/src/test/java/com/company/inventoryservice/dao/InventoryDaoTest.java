@@ -17,7 +17,7 @@ class InventoryDaoTest {
     @BeforeEach
     void setUp() {
         inventoryDao.getAllInventories().stream()
-                .forEach(inventory -> inventoryDao.deleteInventory(inventory.getId()));
+                .forEach(inventory -> inventoryDao.deleteInventory(inventory.getInventory_id()));
     }
 
     @Test
@@ -25,7 +25,7 @@ class InventoryDaoTest {
         Inventory inventory = new Inventory(1, 10);
         inventory = inventoryDao.createInventory(inventory);
 
-        assertEquals(inventory, inventoryDao.getInventory(inventory.getId()));
+        assertEquals(inventory, inventoryDao.getInventory(inventory.getInventory_id()));
     }
 
     @Test
@@ -33,7 +33,7 @@ class InventoryDaoTest {
         Inventory inventory = new Inventory(1, 10);
         inventory = inventoryDao.createInventory(inventory);
 
-        assertEquals(inventory, inventoryDao.getInventory(inventory.getId()));
+        assertEquals(inventory, inventoryDao.getInventory(inventory.getInventory_id()));
     }
 
     @Test
@@ -54,16 +54,16 @@ class InventoryDaoTest {
 
         inventoryDao.updateInventory(inventory);
 
-        assertEquals(inventory, inventoryDao.getInventory(inventory.getId()));
+        assertEquals(inventory, inventoryDao.getInventory(inventory.getInventory_id()));
     }
 
     @Test
     void deleteInventory() {
         Inventory inventory = new Inventory(1, 10);
         inventory = inventoryDao.createInventory(inventory);
-        assertEquals(inventory, inventoryDao.getInventory(inventory.getId()));
+        assertEquals(inventory, inventoryDao.getInventory(inventory.getInventory_id()));
 
-        inventoryDao.deleteInventory(inventory.getId());
-        assertNull(inventoryDao.getInventory(inventory.getId()));
+        inventoryDao.deleteInventory(inventory.getInventory_id());
+        assertNull(inventoryDao.getInventory(inventory.getInventory_id()));
     }
 }
