@@ -20,8 +20,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -80,10 +79,18 @@ class ProductServiceControllerTest {
     }
 
     @Test
-    void updateProduct() {
+    void updateProduct() throws Exception{
+        ProductViewModel pvm = new ProductViewModel(1,"Chair", "Sit On", new BigDecimal("9.99"), new BigDecimal("0.99"));
+        String inputJson = mapper.writeValueAsString(pvm);
+        mockMvc.perform(put("/product")
+                .content(inputJson)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNoContent());
     }
 
     @Test
-    void deleteProduct() {
+    void deleteProduct() throws Exception{
+        mockMvc.perform(delete("/product/1"))
+                .andExpect(status().isNoContent());
     }
 }
