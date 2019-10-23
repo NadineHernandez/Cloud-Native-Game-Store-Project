@@ -55,4 +55,13 @@ public class Invoice {
     public int hashCode() {
         return Objects.hash(invoice_id, customer_id, purchase_date);
     }
+
+    @Override
+    public String toString() {
+        return "Invoice{" +
+                "invoice_id=" + invoice_id +
+                ", customer_id=" + customer_id +
+                ", purchase_date=" + purchase_date +
+                '}';
+    }
 }

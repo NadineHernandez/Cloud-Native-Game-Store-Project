@@ -75,4 +75,15 @@ public class InvoiceItem {
     public int hashCode() {
         return Objects.hash(invoice_item_id, invoice_id, inventory_id, quantity, unit_price);
     }
+
+    @Override
+    public String toString() {
+        return "InvoiceItem{" +
+                "invoice_item_id=" + invoice_item_id +
+                ", invoice_id=" + invoice_id +
+                ", inventory_id=" + inventory_id +
+                ", quantity=" + quantity +
+                ", unit_price=" + unit_price +
+                '}';
+    }
 }

@@ -21,6 +21,9 @@ public class InvoiceItemDaoImplementation implements InvoiceItemDao{
     public static final String SELECT_ALL_INVOICE_ITEMS_SQL =
             "SELECT * FROM invoice_item";
 
+    public static final String SELECT_INVOICES_BY_INVOICE_ID_SQL =
+            "SELECT * FROM invoice_item WHERE invoice_id =?";
+
     public static final String UPDATE_INVOICE_ITEM_SQL =
             "UPDATE invoice_item SET invoice_id = ?, inventory_id = ?, quantity = ?, unit_price = ? WHERE invoice_item_id = ?";
 
@@ -57,6 +60,11 @@ public class InvoiceItemDaoImplementation implements InvoiceItemDao{
     }
 
     @Override
+    public List<InvoiceItem> getInvoiceItemsByInvoiceId(int id) {
+        return jdbcTemplate.query(SELECT_INVOICES_BY_INVOICE_ID_SQL, this::mapToRowInvoiceItem, id);
+    }
+
+    @Override
     public void updateInvoiceItem(InvoiceItem invoiceItem) {
         jdbcTemplate.update(UPDATE_INVOICE_ITEM_SQL, invoiceItem.getInvoice_id(), invoiceItem.getInventory_id(),
                 invoiceItem.getQuantity(), invoiceItem.getUnit_price(), invoiceItem.getInvoice_item_id());
@@ -70,6 +78,7 @@ public class InvoiceItemDaoImplementation implements InvoiceItemDao{
 
     private InvoiceItem mapToRowInvoiceItem(ResultSet rs, int rowNum)throws SQLException{
         InvoiceItem invoiceItem = new InvoiceItem();
+        invoiceItem.setInvoice_item_id(rs.getInt("invoice_item_id"));
         invoiceItem.setInvoice_id(rs.getInt("invoice_id"));
         invoiceItem.setInventory_id(rs.getInt("inventory_id"));
         invoiceItem.setQuantity(rs.getInt("quantity"));
