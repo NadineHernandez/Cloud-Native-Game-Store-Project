@@ -1,10 +1,13 @@
-package com.company.inventoryservice.dto;
+package com.company.inventoryservice.viewmodel;
 
+import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 public class InventoryViewModel {
     private int inventory_id;
+    @NotNull
     private Integer product_id;
+    @NotNull
     private Integer quantity;
 
     public InventoryViewModel(Integer product_id, Integer quantity) {

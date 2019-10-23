@@ -1,7 +1,6 @@
 package com.company.inventoryservice.controller;
 
-import com.company.inventoryservice.dto.Inventory;
-import com.company.inventoryservice.dto.InventoryViewModel;
+import com.company.inventoryservice.viewmodel.InventoryViewModel;
 import com.company.inventoryservice.service.InventoryServiceLayer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
