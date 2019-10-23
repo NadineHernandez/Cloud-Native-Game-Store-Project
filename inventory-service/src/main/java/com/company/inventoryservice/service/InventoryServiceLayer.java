@@ -2,7 +2,7 @@ package com.company.inventoryservice.service;
 
 import com.company.inventoryservice.dao.InventoryDao;
 import com.company.inventoryservice.dto.Inventory;
-import com.company.inventoryservice.dto.InventoryViewModel;
+import com.company.inventoryservice.viewmodel.InventoryViewModel;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;

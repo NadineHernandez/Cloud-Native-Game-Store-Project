@@ -1,19 +1,21 @@
 package com.company.invoiceservice.dto;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Objects;
 
 public class Invoice {
     private int invoice_id;
     private Integer customer_id;
-    private Date purchase_date;
+    private LocalDate purchase_date;
 
-    public Invoice(Integer customer_id, Date purchase_date) {
+    public Invoice(Integer customer_id, LocalDate purchase_date) {
         this.customer_id = customer_id;
         this.purchase_date = purchase_date;
     }
 
-    public Invoice(){}
+    public Invoice() {
+    }
 
     public int getInvoice_id() {
         return invoice_id;
@@ -31,11 +33,11 @@ public class Invoice {
         this.customer_id = customer_id;
     }
 
-    public Date getPurchase_date() {
+    public LocalDate getPurchase_date() {
         return purchase_date;
     }
 
-    public void setPurchase_date(Date purchase_date) {
+    public void setPurchase_date(LocalDate purchase_date) {
         this.purchase_date = purchase_date;
     }
 
