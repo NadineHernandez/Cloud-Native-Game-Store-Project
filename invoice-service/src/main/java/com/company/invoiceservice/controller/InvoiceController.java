@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -19,30 +20,37 @@ public class InvoiceController {
     @PostMapping(value = "/invoice")
     @ResponseStatus(HttpStatus.CREATED)
     public InvoiceViewModel addInvoice(@RequestBody @Valid InvoiceViewModel ivm){
-        return null;
+        return serviceLayer.createInvoice(ivm);
     }
 
     @GetMapping(value = "/invoice")
     @ResponseStatus(HttpStatus.OK)
     public List<InvoiceViewModel> getAllInvoices(){
-        return null;
+        return serviceLayer.findAllInvoices();
     }
 
     @GetMapping(value = "/invoice/{id}")
     @ResponseStatus(HttpStatus.OK)
     public InvoiceViewModel getInvoice(@PathVariable int id){
-        return null;
+        try {
+            int tester = serviceLayer.findInvoice(id).getInvoice_id();
+        } catch (Exception e){
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "No Invoices found with id: " + id, e
+            );
+        }
+        return serviceLayer.findInvoice(id);
     }
 
     @PutMapping(value = "/invoice")
     @ResponseStatus(HttpStatus.OK)
     public void updateInvoice(@RequestBody @Valid InvoiceViewModel ivm){
-
+        serviceLayer.updateInvoice(ivm);
     }
 
     @DeleteMapping(value = "/invoice/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void deleteInvoice(@PathVariable int id){
-
+        serviceLayer.deleteInvoice(id);
     }
 }
