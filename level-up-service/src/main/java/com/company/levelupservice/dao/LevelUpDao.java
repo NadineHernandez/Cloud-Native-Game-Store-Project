@@ -7,7 +7,7 @@ import java.util.List;
 public interface LevelUpDao {
     LevelUp createLevelUp(LevelUp levelUp);
     LevelUp getLevelUp(int id);
-    List<LevelUp> getAllLevelUp();
+    List<LevelUp> getAllLevelUps();
     void updateLevelUp(LevelUp levelUp);
     void deleteLevelUp(int id);
 }
