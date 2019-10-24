@@ -23,7 +23,7 @@ class InventoryServiceLayerTest {
         inventoryDao = mock(InventoryDao.class);
 
         Inventory inventory = new Inventory(1, 10);
-        inventory.setInventory_id(1);
+        inventory.setInventoryId(1);
 
         Inventory inventory1 = new Inventory(1, 10);
 
@@ -46,7 +46,7 @@ class InventoryServiceLayerTest {
         InventoryViewModel ivm = new InventoryViewModel(1,10);
         ivm = serviceLayer.createInventory(ivm);
 
-        assertEquals(ivm, serviceLayer.findInventory(ivm.getInventory_id()));
+        assertEquals(ivm, serviceLayer.findInventory(ivm.getInventoryId()));
     }
 
     @Test
@@ -54,7 +54,7 @@ class InventoryServiceLayerTest {
         InventoryViewModel ivm = new InventoryViewModel(1,10);
         ivm = serviceLayer.createInventory(ivm);
 
-        assertEquals(ivm, serviceLayer.findInventory(ivm.getInventory_id()));
+        assertEquals(ivm, serviceLayer.findInventory(ivm.getInventoryId()));
     }
 
     @Test
@@ -82,7 +82,7 @@ class InventoryServiceLayerTest {
         ivm = serviceLayer.createInventory(ivm);
 
         ArgumentCaptor<Integer> intCaptor = ArgumentCaptor.forClass(Integer.class);
-        serviceLayer.deleteInventory(ivm.getInventory_id());
+        serviceLayer.deleteInventory(ivm.getInventoryId());
 
         verify(inventoryDao, times(1)).deleteInventory(intCaptor.capture());
     }

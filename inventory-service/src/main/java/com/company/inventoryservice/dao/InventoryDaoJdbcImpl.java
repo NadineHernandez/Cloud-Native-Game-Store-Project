@@ -35,9 +35,9 @@ public class InventoryDaoJdbcImpl implements InventoryDao{
 
     @Override
     public Inventory createInventory(Inventory inventory) {
-        jdbcTemplate.update(INSERT_INVENTORY_SQL, inventory.getProduct_id(), inventory.getQuantity());
+        jdbcTemplate.update(INSERT_INVENTORY_SQL, inventory.getProductId(), inventory.getQuantity());
         int id = jdbcTemplate.queryForObject("select last_insert_id()", Integer.class);
-        inventory.setInventory_id(id);
+        inventory.setInventoryId(id);
         return inventory;
     }
 
@@ -57,7 +57,7 @@ public class InventoryDaoJdbcImpl implements InventoryDao{
 
     @Override
     public void updateInventory(Inventory inventory) {
-        jdbcTemplate.update(UPDATE_INVENTORY, inventory.getProduct_id(), inventory.getQuantity(), inventory.getInventory_id());
+        jdbcTemplate.update(UPDATE_INVENTORY, inventory.getProductId(), inventory.getQuantity(), inventory.getInventoryId());
     }
 
     @Override
@@ -67,8 +67,8 @@ public class InventoryDaoJdbcImpl implements InventoryDao{
 
     private Inventory mapToRowInventory(ResultSet rs, int rowNum) throws SQLException{
         Inventory inventory = new Inventory();
-        inventory.setInventory_id(rs.getInt("inventory_id"));
-        inventory.setProduct_id(rs.getInt("product_id"));
+        inventory.setInventoryId(rs.getInt("inventory_id"));
+        inventory.setProductId(rs.getInt("product_id"));
         inventory.setQuantity(rs.getInt("quantity"));
 
         return inventory;

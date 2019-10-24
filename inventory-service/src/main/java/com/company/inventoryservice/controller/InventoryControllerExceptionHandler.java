@@ -47,7 +47,7 @@ public class InventoryControllerExceptionHandler {
 
     @ExceptionHandler(value = {MethodArgumentNotValidException.class})
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
-    public ResponseEntity<VndErrors> postValidationError
+    public ResponseEntity<VndErrors> inventoryValidationError
             (MethodArgumentNotValidException e, WebRequest request) {
         //Binding result holds the validation result()
         BindingResult result = e.getBindingResult();
