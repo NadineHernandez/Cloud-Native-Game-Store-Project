@@ -1,7 +1,7 @@
-package com.company.customerservice.controller;
+package com.company.adminapi.controller;
 
-import com.company.customerservice.model.CustomerViewModel;
-import com.company.customerservice.service.CustomerServiceLayer;
+import com.company.adminapi.model.CustomerViewModel;
+import com.company.adminapi.service.CustomerServiceLayer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -24,10 +24,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(SpringExtension.class)
-@WebMvcTest(CustomerServiceController.class)
+@WebMvcTest(CustomerController.class)
 @ImportAutoConfiguration(RefreshAutoConfiguration.class)
+class CustomerControllerTest {
 
-class CustomerServiceControllerTest {
 
     @MockBean
     CustomerServiceLayer service;
@@ -37,8 +37,6 @@ class CustomerServiceControllerTest {
 
     ObjectMapper mapper = new ObjectMapper();
 
-
-    @Test
     void getCustomer() throws Exception {
         CustomerViewModel cvm = new CustomerViewModel(101,"John", "Doe", "123 Abc Street", "Atlanta", "11111", "john@doe.com", "555-5555");
         when(service.findCustomer(cvm.getCustomerId())).thenReturn(Optional.of(cvm));
@@ -93,3 +91,4 @@ class CustomerServiceControllerTest {
                 .andExpect(status().isNoContent());
     }
 }
+
