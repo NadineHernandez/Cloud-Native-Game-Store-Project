@@ -26,13 +26,6 @@ public class InventoryController {
     @GetMapping(value = "/inventory")
     @ResponseStatus(HttpStatus.OK)
     public List<InventoryViewModel> getAllInventories(){
-        try{
-            int tester = serviceLayer.findAllInventories().get(0).getInventory_id();
-        } catch (Exception e){
-            throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, "No Inventories found", e
-            );
-        }
         return serviceLayer.findAllInventories();
     }
 
@@ -40,7 +33,7 @@ public class InventoryController {
     @ResponseStatus(HttpStatus.OK)
     public InventoryViewModel getInventory(@PathVariable int id){
         try{
-            int tester = serviceLayer.findInventory(id).getInventory_id();
+            int tester = serviceLayer.findInventory(id).getInventoryId();
         }catch (Exception e){
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND, "No Inventory found with id: " + id, e

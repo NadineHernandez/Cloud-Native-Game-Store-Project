@@ -1,7 +1,7 @@
-package com.company.invoiceservice.controller;
+package com.company.levelupservice.controller;
 
-import com.company.invoiceservice.service.ServiceLayer;
-import com.company.invoiceservice.viewmodels.InvoiceViewModel;
+import com.company.levelupservice.service.LevelUpServiceLayer;
+import com.company.levelupservice.viewmodel.LevelUpViewModel;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -29,30 +29,30 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
-@WebMvcTest(controllers = InvoiceController.class)
+@WebMvcTest(controllers = LevelUpController.class)
 @ImportAutoConfiguration(RefreshAutoConfiguration.class)
-class InvoiceControllerTest {
+class LevelUpControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
     @MockBean
-    private ServiceLayer serviceLayer;
+    private LevelUpServiceLayer serviceLayer;
 
     private ObjectMapper mapper = new ObjectMapper();
 
     @Test
-    void addInvoice() throws Exception{
-        InvoiceViewModel inputInvoice = new InvoiceViewModel(1, LocalDate.of(2019, 7, 22));
-        String inputJson = mapper.writeValueAsString(inputInvoice);
+    void addLevelUp() throws Exception{
+        LevelUpViewModel inputLvl = new LevelUpViewModel(1,50, LocalDate.of(2019,7,22));
+        String inputJson = mapper.writeValueAsString(inputLvl);
 
-        InvoiceViewModel outputInvoice = new InvoiceViewModel(1, LocalDate.of(2019, 7, 22));
-        outputInvoice.setInvoice_id(1);
-        String outputJson = mapper.writeValueAsString(outputInvoice);
+        LevelUpViewModel outputLvl = new LevelUpViewModel(1,50, LocalDate.of(2019,7,22));
+        outputLvl.setLevelUpId(1);
+        String outputJson = mapper.writeValueAsString(outputLvl);
 
-        when(serviceLayer.createInvoice(inputInvoice)).thenReturn(outputInvoice);
+        when(serviceLayer.createLevelUp(inputLvl)).thenReturn(outputLvl);
 
-        this.mockMvc.perform(post("/invoice")
+        this.mockMvc.perform(post("/levelup")
         .content(inputJson)
         .contentType(MediaType.APPLICATION_JSON)).andDo(print())
                 .andExpect(status().isCreated())
@@ -60,69 +60,66 @@ class InvoiceControllerTest {
     }
 
     @Test
-    void getAllInvoices() throws Exception{
-        InvoiceViewModel outputInvoice = new InvoiceViewModel(1, LocalDate.of(2019, 7, 22));
-        outputInvoice.setInvoice_id(1);
+    void getAllLevelUps() throws Exception{
+        LevelUpViewModel outputLvl = new LevelUpViewModel(1,50, LocalDate.of(2019,7,22));
+        outputLvl.setLevelUpId(1);
 
-        List<InvoiceViewModel> ivms = new ArrayList<>();
-        ivms.add(outputInvoice);
+        List<LevelUpViewModel> luvms = new ArrayList<>();
+        luvms.add(outputLvl);
 
-        when(serviceLayer.findAllInvoices()).thenReturn(ivms);
+        when(serviceLayer.findAllLevelUps()).thenReturn(luvms);
 
-        List<InvoiceViewModel> listChecker = new ArrayList<>();
-        listChecker.addAll(ivms);
+        List<LevelUpViewModel> listChecker = new ArrayList<>();
+        listChecker.addAll(luvms);
 
         String outputJson = mapper.writeValueAsString(listChecker);
 
-        this.mockMvc.perform(get("/invoice"))
-                .andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(content().json(outputJson));
-
-    }
-
-    @Test
-    void getInvoice() throws Exception {
-        InvoiceViewModel outputInvoice = new InvoiceViewModel(1, LocalDate.of(2019, 7, 22));
-        outputInvoice.setInvoice_id(1);
-
-        String outputJson = mapper.writeValueAsString(outputInvoice);
-
-        when(serviceLayer.findInvoice(1)).thenReturn(outputInvoice);
-
-        this.mockMvc.perform(get("/invoice/1"))
+        this.mockMvc.perform(get("/levelup"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().json(outputJson));
     }
 
     @Test
-    void getInvoiceThatDoesNotExistShouldReturn404()throws Exception{
+    void getLevelUp() throws Exception{
+        LevelUpViewModel outputLvl = new LevelUpViewModel(1,50, LocalDate.of(2019,7,22));
+        outputLvl.setLevelUpId(1);
+        String outputJson = mapper.writeValueAsString(outputLvl);
+
+        when(serviceLayer.findLevelUp(1)).thenReturn(outputLvl);
+
+        this.mockMvc.perform(get("/levelup/1"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().json(outputJson));
+    }
+
+    @Test
+    void getLevelUpThatDoesNotExistShouldReturn404() throws Exception{
         int id = 90000;
 
-        when(serviceLayer.findInvoice(id)).thenReturn(null);
+        when(serviceLayer.findLevelUp(id)).thenReturn(null);
 
-        this.mockMvc.perform(get("/invoice/" + id))
+        this.mockMvc.perform(get("/levelup/" + id))
                 .andDo(print())
                 .andExpect(status().isNotFound());
     }
 
     @Test
-    void updateInvoice() throws Exception{
-        InvoiceViewModel inputInvoice = new InvoiceViewModel(1, LocalDate.of(2019, 7, 22));
-        inputInvoice.setInvoice_id(1);
+    void updateLevelUp() throws Exception{
+        LevelUpViewModel inputLvl = new LevelUpViewModel(1,50, LocalDate.of(2019,7,22));
+        inputLvl.setLevelUpId(1);
+        String inputJson = mapper.writeValueAsString(inputLvl);
 
-        String inputJson = mapper.writeValueAsString(inputInvoice);
-
-        this.mockMvc.perform(put("/invoice")
+        this.mockMvc.perform(put("/levelup")
         .content(inputJson)
         .contentType(MediaType.APPLICATION_JSON)).andDo(print())
                 .andExpect(status().isOk());
     }
 
     @Test
-    void deleteInvoice() throws Exception{
-        this.mockMvc.perform(MockMvcRequestBuilders.delete("/invoice/1"))
+    void deleteLevelUp() throws Exception{
+        this.mockMvc.perform(MockMvcRequestBuilders.delete("/levelup/1"))
                 .andDo(print()).andExpect(status().isOk())
                 .andExpect(content().string(""));
     }

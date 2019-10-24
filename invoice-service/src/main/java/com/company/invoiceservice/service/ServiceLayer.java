@@ -7,10 +7,12 @@ import com.company.invoiceservice.dto.InvoiceItem;
 import com.company.invoiceservice.viewmodels.InvoiceItemViewModel;
 import com.company.invoiceservice.viewmodels.InvoiceViewModel;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class ServiceLayer {
 
     @Autowired

@@ -45,7 +45,7 @@ class InventoryControllerTest {
         String inputJson = mapper.writeValueAsString(inputIvm);
 
         InventoryViewModel outputIvm = new InventoryViewModel(1,10);
-        outputIvm.setInventory_id(1);
+        outputIvm.setInventoryId(1);
 
         String outputJson = mapper.writeValueAsString(outputIvm);
 
@@ -61,7 +61,7 @@ class InventoryControllerTest {
     @Test
     void getAllInventories() throws Exception{
         InventoryViewModel outputIvm = new InventoryViewModel(1,10);
-        outputIvm.setInventory_id(1);
+        outputIvm.setInventoryId(1);
 
         List<InventoryViewModel> ivmList = new ArrayList<>();
         ivmList.add(outputIvm);
@@ -80,18 +80,9 @@ class InventoryControllerTest {
     }
 
     @Test
-    void getAllInventoriesWhenNoneExistShouldReturn404() throws Exception{
-        when(serviceLayer.findAllInventories()).thenReturn(null);
-
-        this.mockMvc.perform(get("/inventory"))
-                .andDo(print())
-                .andExpect(status().isNotFound());
-    }
-
-    @Test
     void getInventory() throws Exception{
         InventoryViewModel outputIvm = new InventoryViewModel(1,10);
-        outputIvm.setInventory_id(1);
+        outputIvm.setInventoryId(1);
 
         String outputJson = mapper.writeValueAsString(outputIvm);
 
@@ -117,7 +108,7 @@ class InventoryControllerTest {
     @Test
     void updateInventory() throws Exception{
         InventoryViewModel inputIvm = new InventoryViewModel(1,10);
-        inputIvm.setInventory_id(1);
+        inputIvm.setInventoryId(1);
 
         String inputJson = mapper.writeValueAsString(inputIvm);
 

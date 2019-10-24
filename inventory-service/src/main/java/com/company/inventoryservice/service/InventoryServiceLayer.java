@@ -4,10 +4,12 @@ import com.company.inventoryservice.dao.InventoryDao;
 import com.company.inventoryservice.dto.Inventory;
 import com.company.inventoryservice.viewmodel.InventoryViewModel;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class InventoryServiceLayer {
     @Autowired
     InventoryDao inventoryDao;
@@ -17,13 +19,13 @@ public class InventoryServiceLayer {
     }
 
     private InventoryViewModel buildInventoryViewModel(Inventory inventory){
-        InventoryViewModel ivm = new InventoryViewModel(inventory.getProduct_id(), inventory.getQuantity());
-        ivm.setInventory_id(inventory.getInventory_id());
+        InventoryViewModel ivm = new InventoryViewModel(inventory.getProductId(), inventory.getQuantity());
+        ivm.setInventoryId(inventory.getInventoryId());
         return ivm;
     }
 
     public InventoryViewModel createInventory(InventoryViewModel ivm){
-        Inventory inventory = new Inventory(ivm.getProduct_id(), ivm.getQuantity());
+        Inventory inventory = new Inventory(ivm.getProductId(), ivm.getQuantity());
         inventory = inventoryDao.createInventory(inventory);
         return buildInventoryViewModel(inventory);
     }
@@ -43,8 +45,8 @@ public class InventoryServiceLayer {
     }
 
     public void updateInventory(InventoryViewModel ivm){
-        Inventory inventory = new Inventory(ivm.getProduct_id(), ivm.getQuantity());
-        inventory.setInventory_id(ivm.getInventory_id());
+        Inventory inventory = new Inventory(ivm.getProductId(), ivm.getQuantity());
+        inventory.setInventoryId(ivm.getInventoryId());
         inventoryDao.updateInventory(inventory);
     }
 

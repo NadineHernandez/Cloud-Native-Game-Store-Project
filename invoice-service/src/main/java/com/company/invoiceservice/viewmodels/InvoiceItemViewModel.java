@@ -1,13 +1,22 @@
 package com.company.invoiceservice.viewmodels;
 
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.Objects;
 
 public class InvoiceItemViewModel {
     private int invoice_item_id;
+    @NotNull
     private Integer invoice_id;
+    @NotNull
     private Integer inventory_id;
+    @NotNull
     private Integer quantity;
+    @NotNull
+    @Digits(integer = 7, fraction = 2, message = "Incorrect price format")
+    @Min(0)
     private BigDecimal unit_price;
 
     public InvoiceItemViewModel(Integer invoice_id, Integer inventory_id, Integer quantity, BigDecimal unit_price) {
