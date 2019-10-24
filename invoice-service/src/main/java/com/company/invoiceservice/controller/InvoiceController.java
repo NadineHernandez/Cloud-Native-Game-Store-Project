@@ -33,7 +33,7 @@ public class InvoiceController {
     @ResponseStatus(HttpStatus.OK)
     public InvoiceViewModel getInvoice(@PathVariable int id){
         try {
-            int tester = serviceLayer.findInvoice(id).getInvoice_id();
+            int tester = serviceLayer.findInvoice(id).getInvoiceId();
         } catch (Exception e){
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND, "No Invoices found with id: " + id, e

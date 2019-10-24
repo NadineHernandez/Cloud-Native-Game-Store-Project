@@ -26,8 +26,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(controllers = InvoiceController.class)
 @ImportAutoConfiguration(RefreshAutoConfiguration.class)
@@ -47,7 +45,7 @@ class InvoiceControllerTest {
         String inputJson = mapper.writeValueAsString(inputInvoice);
 
         InvoiceViewModel outputInvoice = new InvoiceViewModel(1, LocalDate.of(2019, 7, 22));
-        outputInvoice.setInvoice_id(1);
+        outputInvoice.setInvoiceId(1);
         String outputJson = mapper.writeValueAsString(outputInvoice);
 
         when(serviceLayer.createInvoice(inputInvoice)).thenReturn(outputInvoice);
@@ -62,7 +60,7 @@ class InvoiceControllerTest {
     @Test
     void getAllInvoices() throws Exception{
         InvoiceViewModel outputInvoice = new InvoiceViewModel(1, LocalDate.of(2019, 7, 22));
-        outputInvoice.setInvoice_id(1);
+        outputInvoice.setInvoiceId(1);
 
         List<InvoiceViewModel> ivms = new ArrayList<>();
         ivms.add(outputInvoice);
@@ -84,7 +82,7 @@ class InvoiceControllerTest {
     @Test
     void getInvoice() throws Exception {
         InvoiceViewModel outputInvoice = new InvoiceViewModel(1, LocalDate.of(2019, 7, 22));
-        outputInvoice.setInvoice_id(1);
+        outputInvoice.setInvoiceId(1);
 
         String outputJson = mapper.writeValueAsString(outputInvoice);
 
@@ -110,7 +108,7 @@ class InvoiceControllerTest {
     @Test
     void updateInvoice() throws Exception{
         InvoiceViewModel inputInvoice = new InvoiceViewModel(1, LocalDate.of(2019, 7, 22));
-        inputInvoice.setInvoice_id(1);
+        inputInvoice.setInvoiceId(1);
 
         String inputJson = mapper.writeValueAsString(inputInvoice);
 

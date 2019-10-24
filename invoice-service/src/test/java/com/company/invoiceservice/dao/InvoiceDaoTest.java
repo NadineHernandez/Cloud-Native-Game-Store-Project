@@ -19,7 +19,7 @@ class InvoiceDaoTest {
     @BeforeEach
     void setUp() {
         invoiceDao.getAllInvoices().stream().forEach(invoice -> {
-            invoiceDao.deleteInvoice(invoice.getInvoice_id());
+            invoiceDao.deleteInvoice(invoice.getInvoiceId());
         });
     }
 
@@ -28,7 +28,7 @@ class InvoiceDaoTest {
         Invoice invoice = new Invoice(1, LocalDate.of(2019, 7, 22));
         invoice = invoiceDao.createInvoice(invoice);
 
-        assertEquals(invoice, invoiceDao.getInvoice(invoice.getInvoice_id()));
+        assertEquals(invoice, invoiceDao.getInvoice(invoice.getInvoiceId()));
     }
 
     @Test
@@ -36,7 +36,7 @@ class InvoiceDaoTest {
         Invoice invoice = new Invoice(1, LocalDate.of(2019, 7, 22));
         invoice = invoiceDao.createInvoice(invoice);
 
-        assertEquals(invoice, invoiceDao.getInvoice(invoice.getInvoice_id()));
+        assertEquals(invoice, invoiceDao.getInvoice(invoice.getInvoiceId()));
     }
 
     @Test
@@ -52,20 +52,20 @@ class InvoiceDaoTest {
         Invoice invoice = new Invoice(1, LocalDate.of(2019, 7, 22));
         invoice = invoiceDao.createInvoice(invoice);
 
-        invoice.setCustomer_id(2);
-        invoice.setPurchase_date(LocalDate.of(2019,8,23));
+        invoice.setCustomerId(2);
+        invoice.setPurchaseDate(LocalDate.of(2019,8,23));
         invoiceDao.updateInvoice(invoice);
 
-        assertEquals(invoice, invoiceDao.getInvoice(invoice.getInvoice_id()));
+        assertEquals(invoice, invoiceDao.getInvoice(invoice.getInvoiceId()));
     }
 
     @Test
     void deleteInvoice() {
         Invoice invoice = new Invoice(1, LocalDate.of(2019, 7, 22));
         invoice = invoiceDao.createInvoice(invoice);
-        assertEquals(invoice, invoiceDao.getInvoice(invoice.getInvoice_id()));
+        assertEquals(invoice, invoiceDao.getInvoice(invoice.getInvoiceId()));
 
-        invoiceDao.deleteInvoice(invoice.getInvoice_id());
-        assertNull(invoiceDao.getInvoice(invoice.getInvoice_id()));
+        invoiceDao.deleteInvoice(invoice.getInvoiceId());
+        assertNull(invoiceDao.getInvoice(invoice.getInvoiceId()));
     }
 }

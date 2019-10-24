@@ -1,4 +1,5 @@
-package com.company.invoiceservice.dto;
+package com.company.retailapi.models;
+
 
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Min;
@@ -6,7 +7,7 @@ import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.Objects;
 
-public class InvoiceItem {
+public class InvoiceItemViewModel {
     private int invoiceItemId;
     @NotNull
     private Integer invoiceId;
@@ -19,14 +20,15 @@ public class InvoiceItem {
     @Min(0)
     private BigDecimal unitPrice;
 
-    public InvoiceItem(Integer invoiceId, Integer inventoryId, Integer quantity, BigDecimal unitPrice) {
+    public InvoiceItemViewModel(Integer invoiceId, Integer inventoryId, Integer quantity, BigDecimal unitPrice) {
         this.invoiceId = invoiceId;
         this.inventoryId = inventoryId;
         this.quantity = quantity;
         this.unitPrice = unitPrice;
     }
 
-    public InvoiceItem(){}
+    public InvoiceItemViewModel() {
+    }
 
     public int getInvoiceItemId() {
         return invoiceItemId;
@@ -72,7 +74,7 @@ public class InvoiceItem {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        InvoiceItem that = (InvoiceItem) o;
+        InvoiceItemViewModel that = (InvoiceItemViewModel) o;
         return invoiceItemId == that.invoiceItemId &&
                 invoiceId.equals(that.invoiceId) &&
                 inventoryId.equals(that.inventoryId) &&
@@ -84,15 +86,5 @@ public class InvoiceItem {
     public int hashCode() {
         return Objects.hash(invoiceItemId, invoiceId, inventoryId, quantity, unitPrice);
     }
-
-    @Override
-    public String toString() {
-        return "InvoiceItem{" +
-                "invoice_item_id=" + invoiceItemId +
-                ", invoice_id=" + invoiceId +
-                ", inventory_id=" + inventoryId +
-                ", quantity=" + quantity +
-                ", unit_price=" + unitPrice +
-                '}';
-    }
 }
+

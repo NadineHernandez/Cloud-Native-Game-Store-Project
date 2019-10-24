@@ -28,8 +28,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(controllers = InvoiceItemController.class)
 @ImportAutoConfiguration(RefreshAutoConfiguration.class)
@@ -49,7 +47,7 @@ class InvoiceItemControllerTest {
         String inputJson = mapper.writeValueAsString(inputItem);
 
         InvoiceItemViewModel outputItem = new InvoiceItemViewModel(1, 1, 10, new BigDecimal("10.00"));
-        outputItem.setInvoice_item_id(1);
+        outputItem.setInvoiceItemId(1);
         String outputJson = mapper.writeValueAsString(outputItem);
 
         when(serviceLayer.createInvoiceItem(inputItem)).thenReturn(outputItem);
@@ -64,7 +62,7 @@ class InvoiceItemControllerTest {
     @Test
     void getAllInvoiceItems() throws Exception{
         InvoiceItemViewModel outputItem = new InvoiceItemViewModel(1, 1, 10, new BigDecimal("10.00"));
-        outputItem.setInvoice_item_id(1);
+        outputItem.setInvoiceItemId(1);
 
         List<InvoiceItemViewModel> items = new ArrayList<>();
         items.add(outputItem);
@@ -85,7 +83,7 @@ class InvoiceItemControllerTest {
     @Test
     void getInvoiceItem() throws Exception{
         InvoiceItemViewModel outputItem = new InvoiceItemViewModel(1, 1, 10, new BigDecimal("10.00"));
-        outputItem.setInvoice_item_id(1);
+        outputItem.setInvoiceItemId(1);
 
         String outputJson = mapper.writeValueAsString(outputItem);
 
@@ -111,10 +109,10 @@ class InvoiceItemControllerTest {
     @Test
     void getInvoiceItemsByInvoiceId() throws Exception{
         InvoiceItemViewModel outputItem = new InvoiceItemViewModel(1, 1, 10, new BigDecimal("10.00"));
-        outputItem.setInvoice_item_id(1);
+        outputItem.setInvoiceItemId(1);
 
         InvoiceViewModel outputInvoice = new InvoiceViewModel(1, LocalDate.of(2019, 7, 22));
-        outputInvoice.setInvoice_id(1);
+        outputInvoice.setInvoiceId(1);
 
         List<InvoiceItemViewModel> items = new ArrayList<>();
         items.add(outputItem);
@@ -147,7 +145,7 @@ class InvoiceItemControllerTest {
     @Test
     void updateInvoiceItem() throws Exception{
         InvoiceItemViewModel inputItem = new InvoiceItemViewModel(1, 1, 10, new BigDecimal("10.00"));
-        inputItem.setInvoice_item_id(1);
+        inputItem.setInvoiceItemId(1);
 
         String inputJson = mapper.writeValueAsString(inputItem);
 

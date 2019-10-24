@@ -1,7 +1,6 @@
 package com.company.invoiceservice.dao;
 
 import com.company.invoiceservice.dto.Invoice;
-import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -36,9 +35,9 @@ public class InvoiceDaoImplementation implements InvoiceDao{
 
     @Override
     public Invoice createInvoice(Invoice invoice) {
-        jdbcTemplate.update(INSERT_INVOICE_SQL, invoice.getCustomer_id(), invoice.getPurchase_date());
+        jdbcTemplate.update(INSERT_INVOICE_SQL, invoice.getCustomerId(), invoice.getPurchaseDate());
         int id = jdbcTemplate.queryForObject("select last_insert_id()", Integer.class);
-        invoice.setInvoice_id(id);
+        invoice.setInvoiceId(id);
         return invoice;
     }
 
@@ -58,7 +57,7 @@ public class InvoiceDaoImplementation implements InvoiceDao{
 
     @Override
     public void updateInvoice(Invoice invoice) {
-        jdbcTemplate.update(UPDATE_INVOICE_SQL, invoice.getCustomer_id(), invoice.getPurchase_date(), invoice.getInvoice_id());
+        jdbcTemplate.update(UPDATE_INVOICE_SQL, invoice.getCustomerId(), invoice.getPurchaseDate(), invoice.getInvoiceId());
     }
 
     @Override
@@ -68,9 +67,9 @@ public class InvoiceDaoImplementation implements InvoiceDao{
 
     private Invoice mapToRowInvoice(ResultSet rs, int rowNum)throws SQLException{
         Invoice invoice = new Invoice();
-        invoice.setInvoice_id(rs.getInt("invoice_id"));
-        invoice.setCustomer_id(rs.getInt("customer_id"));
-        invoice.setPurchase_date(rs.getDate("purchase_date").toLocalDate());
+        invoice.setInvoiceId(rs.getInt("invoice_id"));
+        invoice.setCustomerId(rs.getInt("customer_id"));
+        invoice.setPurchaseDate(rs.getDate("purchase_date").toLocalDate());
 
         return invoice;
     }
