@@ -226,7 +226,7 @@ class RetailApiControllerTest {
 
         int expectedOutput = 50;
 
-        when(serviceLayer.getLevelUpPointsByCustomerId(customer.getCustomerId())).thenReturn(levelUp.getPoints());
+        when(serviceLayer.getLevelUpPointsByCustomerId(1)).thenReturn(levelUp.getPoints());
 
         this.mockMvc.perform(get("/levelup/customer/1"))
                 .andDo(print())

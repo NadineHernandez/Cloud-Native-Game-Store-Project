@@ -11,10 +11,11 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
-@ResponseStatus
+@RestController
 @CacheConfig(cacheNames = {"game-store"})
 @RefreshScope
 public class RetailApiController {
@@ -22,7 +23,7 @@ public class RetailApiController {
     @Autowired
     ServiceLayer serviceLayer;
 
-    @CachePut(key = "#resulet.getInvoiceId")
+    @CachePut(key = "#result.getInvoiceId()")
     @PostMapping(value = "/invoices")
     @ResponseStatus(HttpStatus.CREATED)
     public RetailInvoiceViewModel submitInvoice(@RequestBody RetailInvoiceViewModel rivm) {
@@ -33,6 +34,11 @@ public class RetailApiController {
     @GetMapping(value = "/invoices/{id}")
     @ResponseStatus(HttpStatus.OK)
     public RetailInvoiceViewModel getInvoiceById(@PathVariable int id) {
+        try {int tester = serviceLayer.getInvoiceById(id).getInvoiceId();
+        } catch (Exception e) {
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "Invoice cannot be found with id: " + id, e);
+        }
         return serviceLayer.getInvoiceById(id);
     }
 

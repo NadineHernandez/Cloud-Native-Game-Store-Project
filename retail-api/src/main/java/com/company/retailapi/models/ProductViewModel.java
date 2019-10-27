@@ -75,15 +75,16 @@ public class ProductViewModel {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ProductViewModel that = (ProductViewModel) o;
-        return getProductName().equals(that.getProductName()) &&
-                getProductDescription().equals(that.getProductDescription()) &&
-                getListPrice().equals(that.getListPrice()) &&
-                getUnitCost().equals(that.getUnitCost());
+        return Objects.equals(productId, that.productId) &&
+                productName.equals(that.productName) &&
+                productDescription.equals(that.productDescription) &&
+                listPrice.equals(that.listPrice) &&
+                unitCost.equals(that.unitCost);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getProductName(), getProductDescription(), getListPrice(), getUnitCost());
+        return Objects.hash(productId, productName, productDescription, listPrice, unitCost);
     }
 
     @Override
