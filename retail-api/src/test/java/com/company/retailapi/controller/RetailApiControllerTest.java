@@ -47,25 +47,22 @@ class RetailApiControllerTest {
     @MockBean
     private RabbitTemplate rabbitTemplate;
 
-    @MockBean
-    private CustomerClient customerClient;
-
-    @MockBean
-    private InventoryClient inventoryClient;
-
-    @MockBean
-    private InvoiceClient invoiceClient;
-
-    @MockBean
-    private LevelUpClient levelUpClient;
-
-    @MockBean
-    private ProductClient productClient;
+//    @MockBean
+//    private CustomerClient customerClient;
+//
+//    @MockBean
+//    private InventoryClient inventoryClient;
+//
+//    @MockBean
+//    private InvoiceClient invoiceClient;
+//
+//    @MockBean
+//    private LevelUpClient levelUpClient;
+//
+//    @MockBean
+//    private ProductClient productClient;
 
     private ObjectMapper mapper = new ObjectMapper();
-
-//    @MockBean
-//    DataSource dataSource;
 
     @Test
     void submitInvoice() throws Exception{

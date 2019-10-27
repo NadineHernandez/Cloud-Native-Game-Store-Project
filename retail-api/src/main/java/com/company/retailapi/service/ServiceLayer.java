@@ -53,22 +53,6 @@ public class ServiceLayer {
 
         rivm.setTotal(totalCalculator);
 
-        int levelUpPnts = Integer.parseInt(String.valueOf(totalCalculator.divide(new BigDecimal("50.00")).setScale(0,BigDecimal.ROUND_DOWN)))*10;
-
-        if (levelUpClient.getLevelUpByCustomerId(rivm.getCustomerId()) != null) {
-            LevelUpViewModel myLvl = levelUpClient.getLevelUpByCustomerId(rivm.getCustomerId());
-            myLvl.setPoints(
-                    levelUpClient.getLevelUpByCustomerId(rivm.getCustomerId()).getPoints() + levelUpPnts
-            );
-            rabbitTemplate.convertAndSend(EXCHANGE, ROUTING_KEY, myLvl);
-        }
-        else {
-            LocalDate today = LocalDate.of(2019,10,28);
-            LevelUpViewModel myLvl = new LevelUpViewModel(rivm.getCustomerId(), levelUpPnts, today);
-
-            rabbitTemplate.convertAndSend(EXCHANGE, ROUTING_KEY, myLvl);
-        }
-
         return rivm;
     }
 
@@ -93,8 +77,25 @@ public class ServiceLayer {
 
         });
         InvoiceViewModel ivm = buildInvoiceViewModel(rivm);
+        RetailInvoiceViewModel builtRivm = buildRetailInvoiceViewModel(ivm);
 
-        return buildRetailInvoiceViewModel(ivm);
+        int levelUpPnts = Integer.parseInt(String.valueOf(builtRivm.getTotal().divide(new BigDecimal("50.00")).setScale(0,BigDecimal.ROUND_DOWN)))*10;
+
+        if (levelUpClient.getLevelUpByCustomerId(rivm.getCustomerId()) != null) {
+            LevelUpViewModel myLvl = levelUpClient.getLevelUpByCustomerId(rivm.getCustomerId());
+            myLvl.setPoints(
+                    levelUpClient.getLevelUpByCustomerId(rivm.getCustomerId()).getPoints() + levelUpPnts
+            );
+            rabbitTemplate.convertAndSend(EXCHANGE, ROUTING_KEY, myLvl);
+        }
+        else {
+            LocalDate today = LocalDate.of(2019,10,28);
+            LevelUpViewModel myLvl = new LevelUpViewModel(rivm.getCustomerId(), levelUpPnts, today);
+
+            rabbitTemplate.convertAndSend(EXCHANGE, ROUTING_KEY, myLvl);
+        }
+
+        return builtRivm;
     }
 
     public RetailInvoiceViewModel getInvoiceById(int id){
