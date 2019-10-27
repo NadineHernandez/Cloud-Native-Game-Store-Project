@@ -5,6 +5,9 @@ import com.company.retailapi.models.ProductViewModel;
 import com.company.retailapi.service.ServiceLayer;
 import com.company.retailapi.viewmodel.RetailInvoiceViewModel;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -12,55 +15,59 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @ResponseStatus
+@CacheConfig(cacheNames = {"game-store"})
 @RefreshScope
 public class RetailApiController {
 
     @Autowired
     ServiceLayer serviceLayer;
 
-    @RequestMapping(value = "/invoices", method = RequestMethod.POST)
+    @CachePut(key = "#resulet.getInvoiceId")
+    @PostMapping(value = "/invoices")
     @ResponseStatus(HttpStatus.CREATED)
     public RetailInvoiceViewModel submitInvoice(@RequestBody RetailInvoiceViewModel rivm) {
         return serviceLayer.submitInvoice(rivm);
     }
 
-    @RequestMapping(value = "/invoices/{id}", method = RequestMethod.GET)
+    @Cacheable
+    @GetMapping(value = "/invoices/{id}")
     @ResponseStatus(HttpStatus.OK)
     public RetailInvoiceViewModel getInvoiceById(@PathVariable int id) {
         return serviceLayer.getInvoiceById(id);
     }
 
-    @RequestMapping(value = "/invoices", method = RequestMethod.GET)
+    @GetMapping(value = "/invoices")
     @ResponseStatus(HttpStatus.OK)
     public List<RetailInvoiceViewModel> getAllInvoices() {
         return serviceLayer.getAllInvoices();
     }
 
-    @RequestMapping(value = "/invoices/customer/{id}", method = RequestMethod.GET)
+    @GetMapping(value = "/invoices/customer/{id}")
     @ResponseStatus(HttpStatus.OK)
     public List<RetailInvoiceViewModel> getInvoicesByCustomerId(@PathVariable int id) {
         return serviceLayer.getInvoicesByCustomerId(id);
     }
 
-    @RequestMapping(value = "/products/inventory", method = RequestMethod.GET)
+    @GetMapping(value = "/products/inventory")
     @ResponseStatus(HttpStatus.OK)
     public List<ProductViewModel> getProductsInInventory() {
         return serviceLayer.getProductsInInventory();
     }
 
-    @RequestMapping(value = "/products/{id}", method = RequestMethod.GET)
+    @Cacheable
+    @GetMapping(value = "/products/{id}")
     @ResponseStatus(HttpStatus.OK)
     public ProductViewModel getProductById(@PathVariable int id) {
         return serviceLayer.getProductById(id);
     }
 
-    @RequestMapping(value = "/products/invoice/{id}", method = RequestMethod.GET)
+    @GetMapping(value = "/products/invoice/{id}")
     @ResponseStatus(HttpStatus.OK)
     public List<ProductViewModel> getProductByInvoiceId(@PathVariable int id) {
         return serviceLayer.getProductByInvoiceId(id);
     }
 
-    @RequestMapping(value = "/levelup/customer/{id}", method = RequestMethod.GET)
+    @GetMapping(value = "/levelup/customer/{id}")
     @ResponseStatus(HttpStatus.OK)
     public int getLevelUpPointsByCustomerId(int id) {
         return serviceLayer.getLevelUpPointsByCustomerId(id);
