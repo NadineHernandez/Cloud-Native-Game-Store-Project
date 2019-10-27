@@ -64,5 +64,14 @@ public class InvoiceViewModel {
     public int hashCode() {
         return Objects.hash(invoiceId, customerId, purchaseDate);
     }
+
+    @Override
+    public String toString() {
+        return "InvoiceViewModel{" +
+                "invoiceId=" + invoiceId +
+                ", customerId=" + customerId +
+                ", purchaseDate=" + purchaseDate +
+                '}';
+    }
 }
 

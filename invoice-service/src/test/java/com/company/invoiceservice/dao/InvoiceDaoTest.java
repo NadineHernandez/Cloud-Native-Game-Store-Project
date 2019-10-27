@@ -68,4 +68,12 @@ class InvoiceDaoTest {
         invoiceDao.deleteInvoice(invoice.getInvoiceId());
         assertNull(invoiceDao.getInvoice(invoice.getInvoiceId()));
     }
+
+    @Test
+    void getInvoicesByCustomerId(){
+        Invoice invoice = new Invoice(1, LocalDate.of(2019, 7, 22));
+        invoiceDao.createInvoice(invoice);
+
+        assertEquals(1, invoiceDao.getInvoicesByCustomerId(1).size());
+    }
 }

@@ -32,6 +32,10 @@ public interface InvoiceClient {
     @ResponseStatus(HttpStatus.OK)
     public void deleteInvoice(@PathVariable int id);
 
+    @GetMapping(value = "/invoice/customer/{customerId}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<InvoiceViewModel> getInvoicesByCustomerId(@PathVariable Integer customerId);
+
     @PostMapping(value = "/invoiceitem")
     @ResponseStatus(HttpStatus.CREATED)
     public InvoiceItemViewModel addInvoiceItem(@RequestBody @Valid InvoiceItemViewModel iivm);

@@ -38,6 +38,7 @@ class ServiceLayerTest {
         doReturn(invoice).when(invoiceDao).createInvoice(invoice1);
         doReturn(invoice).when(invoiceDao).getInvoice(1);
         doReturn(invoices).when(invoiceDao).getAllInvoices();
+        doReturn(invoices).when(invoiceDao).getInvoicesByCustomerId(1);
     }
 
     private void setUpInvoiceItemDaoMock(){
@@ -161,5 +162,13 @@ class ServiceLayerTest {
         serviceLayer.deleteInvoiceItem(invoiceItem.getInvoiceItemId());
 
         verify(invoiceItemDao, times(1)).deleteInvoiceItem(intCaptor.capture());
+    }
+
+    @Test
+    void getInvoicesByCustomerId(){
+        InvoiceViewModel invoice1 = new InvoiceViewModel(1, LocalDate.of(2019, 7, 22));
+        serviceLayer.createInvoice(invoice1);
+
+        assertEquals(1, serviceLayer.getInvoicesByCustomerId(invoice1.getCustomerId()).size());
     }
 }

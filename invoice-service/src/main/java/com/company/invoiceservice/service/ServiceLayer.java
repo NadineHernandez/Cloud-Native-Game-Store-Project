@@ -111,4 +111,13 @@ public class ServiceLayer {
     public void deleteInvoiceItem(int id){
         invoiceItemDao.deleteInvoiceItem(id);
     }
+
+    public List<InvoiceViewModel> getInvoicesByCustomerId(int customerId){
+        List<InvoiceViewModel> ivms = new ArrayList<>();
+        invoiceDao.getInvoicesByCustomerId(customerId).stream().forEach(invoice -> {
+            InvoiceViewModel ivm = buildInvoiceViewModel(invoice);
+            ivms.add(ivm);
+        });
+        return ivms;
+    }
 }

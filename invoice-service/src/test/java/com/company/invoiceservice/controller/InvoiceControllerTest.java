@@ -124,4 +124,37 @@ class InvoiceControllerTest {
                 .andDo(print()).andExpect(status().isOk())
                 .andExpect(content().string(""));
     }
+
+    @Test
+    void getInvoicesByCustomerId() throws Exception{
+        InvoiceViewModel outputInvoice = new InvoiceViewModel(1, LocalDate.of(2019, 7, 22));
+        outputInvoice.setInvoiceId(1);
+
+        List<InvoiceViewModel> ivms = new ArrayList<>();
+        ivms.add(outputInvoice);
+
+        when(serviceLayer.getInvoicesByCustomerId(outputInvoice.getCustomerId())).thenReturn(ivms);
+
+        List<InvoiceViewModel> listChecker = new ArrayList<>();
+        listChecker.addAll(ivms);
+
+        String outputJson = mapper.writeValueAsString(listChecker);
+
+
+        this.mockMvc.perform(get("/invoice/customer/" + outputInvoice.getCustomerId()))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().json(outputJson));
+    }
+
+    @Test
+    void getInvoiceByCustomerThatDoesNotExistShouldReturn404()throws Exception{
+        Integer id = 90000;
+
+        when(serviceLayer.getInvoicesByCustomerId(id)).thenReturn(null);
+
+        this.mockMvc.perform(get("/invoice/customer/" + id))
+                .andDo(print())
+                .andExpect(status().isNotFound());
+    }
 }

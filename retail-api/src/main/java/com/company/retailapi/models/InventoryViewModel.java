@@ -56,4 +56,13 @@ public class InventoryViewModel {
     public int hashCode() {
         return Objects.hash(inventoryId, productId, quantity);
     }
+
+    @Override
+    public String toString() {
+        return "InventoryViewModel{" +
+                "inventoryId=" + inventoryId +
+                ", productId=" + productId +
+                ", quantity=" + quantity +
+                '}';
+    }
 }

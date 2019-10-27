@@ -123,4 +123,29 @@ class LevelUpControllerTest {
                 .andDo(print()).andExpect(status().isOk())
                 .andExpect(content().string(""));
     }
+
+    @Test
+    void getLevelUpByCustomerId() throws Exception{
+        LevelUpViewModel outputLvl = new LevelUpViewModel(1,50, LocalDate.of(2019,7,22));
+        outputLvl.setLevelUpId(1);
+        String outputJson = mapper.writeValueAsString(outputLvl);
+
+        when(serviceLayer.getLevelUpByCustomerId(1)).thenReturn(outputLvl);
+
+        this.mockMvc.perform(get("/levelup/customer/1"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().json(outputJson));
+    }
+
+    @Test
+    void getLevelUpByCustomerThatDoesNotExistShouldReturn404() throws Exception{
+        int customerId = 90000;
+
+        when(serviceLayer.getLevelUpByCustomerId(customerId)).thenReturn(null);
+
+        this.mockMvc.perform(get("/levelup/customer/" + customerId))
+                .andDo(print())
+                .andExpect(status().isNotFound());
+    }
 }

@@ -33,6 +33,7 @@ class LevelUpServiceLayerTest {
         doReturn(levelUp).when(levelUpDao).createLevelUp(levelUp1);
         doReturn(levelUp).when(levelUpDao).getLevelUp(1);
         doReturn(levelUps).when(levelUpDao).getAllLevelUps();
+        doReturn(levelUp).when(levelUpDao).getLevelUpByCustomerId(1);
     }
 
     @BeforeEach
@@ -85,5 +86,13 @@ class LevelUpServiceLayerTest {
         serviceLayer.deleteLevelUp(levelUp.getLevelUpId());
 
         verify(levelUpDao, times(1)).deleteLevelUp(intCaptor.capture());
+    }
+
+    @Test
+    void getLevelUpByCustomerId(){
+        LevelUpViewModel levelUp = new LevelUpViewModel(1,50, LocalDate.of(2019,7,22));
+        levelUp = serviceLayer.createLevelUp(levelUp);
+
+        assertEquals(levelUp, serviceLayer.getLevelUpByCustomerId(1));
     }
 }

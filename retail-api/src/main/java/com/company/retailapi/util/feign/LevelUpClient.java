@@ -30,4 +30,8 @@ public interface LevelUpClient {
     @DeleteMapping(value = "/levelup/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void deleteLevelUp(@PathVariable int id);
+
+    @GetMapping(value = "/levelup/customer/{customerId}")
+    @ResponseStatus(HttpStatus.OK)
+    public LevelUpViewModel getLevelUpByCustomerId(@PathVariable int customerId);
 }
