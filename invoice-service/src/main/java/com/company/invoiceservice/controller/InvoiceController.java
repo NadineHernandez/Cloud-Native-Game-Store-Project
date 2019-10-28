@@ -1,5 +1,6 @@
 package com.company.invoiceservice.controller;
 
+import com.company.invoiceservice.dto.Invoice;
 import com.company.invoiceservice.service.ServiceLayer;
 import com.company.invoiceservice.viewmodels.InvoiceViewModel;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +34,7 @@ public class InvoiceController {
     @ResponseStatus(HttpStatus.OK)
     public InvoiceViewModel getInvoice(@PathVariable int id){
         try {
-            int tester = serviceLayer.findInvoice(id).getInvoice_id();
+            int tester = serviceLayer.findInvoice(id).getInvoiceId();
         } catch (Exception e){
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND, "No Invoices found with id: " + id, e
@@ -52,5 +53,19 @@ public class InvoiceController {
     @ResponseStatus(HttpStatus.OK)
     public void deleteInvoice(@PathVariable int id){
         serviceLayer.deleteInvoice(id);
+    }
+
+    @GetMapping(value = "/invoice/customer/{customerId}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<InvoiceViewModel> getInvoicesByCustomerId(@PathVariable Integer customerId){
+        try {
+            List<InvoiceViewModel> ivms = serviceLayer.getInvoicesByCustomerId(customerId);
+            int test = ivms.get(0).getInvoiceId();
+        } catch (Exception e){
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "No Invoices found with customer id: " + customerId, e
+            );
+        }
+        return serviceLayer.getInvoicesByCustomerId(customerId);
     }
 }

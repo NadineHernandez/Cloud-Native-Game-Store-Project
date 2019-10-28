@@ -53,4 +53,9 @@ public class LevelUpServiceLayer {
     public void deleteLevelUp(int id){
         lvlDao.deleteLevelUp(id);
     }
+
+    public LevelUpViewModel getLevelUpByCustomerId(int customerId){
+        LevelUp levelUp = lvlDao.getLevelUpByCustomerId(customerId);
+        return buildLevelUpViewModel(levelUp);
+    }
 }
