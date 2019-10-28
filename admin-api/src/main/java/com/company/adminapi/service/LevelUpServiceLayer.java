@@ -15,23 +15,26 @@ public class LevelUpServiceLayer {
     LevelUpClient client;
 
     public Optional<LevelUpViewModel> findLevelUp(int id) {
-        return null;
+
+        return client.getLevelUp(id);
     }
 
     public List<LevelUpViewModel> findAllLevelUps() {
-        return null;
+
+        return client.getAllLevelUps();
     }
 
     public LevelUpViewModel createLevelUp(LevelUpViewModel luvm) {
-        return null;
+
+        return client.addLevelUp(luvm);
     }
 
     public void updateLevelUp(LevelUpViewModel luvm) {
-
+        client.updateLevelUp(luvm);
     }
 
     public void deleteLevelUp(int id) {
-
+        client.deleteLevelUp(id);
     }
 
 }

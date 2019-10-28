@@ -1,5 +1,10 @@
 package com.company.adminapi.model;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -7,6 +12,8 @@ public class InvoiceViewModel {
 
     private Integer invoiceId;
     private Integer customerId;
+    @JsonSerialize(using=LocalDateSerializer.class)
+    @JsonDeserialize(using=LocalDateDeserializer.class)
     private LocalDate purchaseDate;
 
     public InvoiceViewModel() {
@@ -14,6 +21,11 @@ public class InvoiceViewModel {
 
     public InvoiceViewModel(Integer invoiceId, Integer customerId, LocalDate purchaseDate) {
         this.invoiceId = invoiceId;
+        this.customerId = customerId;
+        this.purchaseDate = purchaseDate;
+    }
+
+    public InvoiceViewModel(Integer customerId, LocalDate purchaseDate) {
         this.customerId = customerId;
         this.purchaseDate = purchaseDate;
     }

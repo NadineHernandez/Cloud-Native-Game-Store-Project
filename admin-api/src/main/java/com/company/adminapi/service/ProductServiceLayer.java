@@ -15,23 +15,26 @@ public class ProductServiceLayer {
     ProductClient client;
 
     public Optional<ProductViewModel> findProduct(int id) {
-        return null;
+
+        return client.getProduct(id);
     }
 
     public List<ProductViewModel> findAllProducts() {
-        return null;
+
+        return client.getAllProducts();
     }
 
     public ProductViewModel createProduct(ProductViewModel pvm) {
-        return null;
+
+        return client.addProduct(pvm);
     }
 
     public void updateProduct(ProductViewModel pvm) {
-
+        client.updateProduct(pvm);
     }
 
     public void deleteProduct(int id) {
-
+        client.deleteProduct(id);
     }
 
 }

@@ -15,23 +15,26 @@ public class InventoryServiceLayer {
     InventoryClient client;
 
     public Optional<InventoryViewModel> findInventory(int id) {
-        return null;
+
+        return client.getInventory(id);
     }
 
     public List<InventoryViewModel> findAllInventories() {
-        return null;
+
+        return client.getAllInventories();
     }
 
     public InventoryViewModel createInventory(InventoryViewModel ivm) {
-        return null;
+
+        return client.addInventory(ivm);
     }
 
     public void updateInventory(InventoryViewModel ivm) {
-
+        client.updateInventory(ivm);
     }
 
     public void deleteInventory(int id) {
-
+        client.deleteInventory(id);
     }
 
 }

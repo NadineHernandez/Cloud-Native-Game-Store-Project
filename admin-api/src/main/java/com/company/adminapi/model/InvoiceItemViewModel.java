@@ -11,6 +11,24 @@ public class InvoiceItemViewModel {
     private Integer quantity;
     private BigDecimal unitPrice;
 
+    public InvoiceItemViewModel() {
+    }
+
+    public InvoiceItemViewModel(Integer invoiceItemId, Integer invoiceId, Integer inventoryId, Integer quantity, BigDecimal unitPrice) {
+        this.invoiceItemId = invoiceItemId;
+        this.invoiceId = invoiceId;
+        this.inventoryId = inventoryId;
+        this.quantity = quantity;
+        this.unitPrice = unitPrice;
+    }
+
+    public InvoiceItemViewModel(Integer invoiceId, Integer inventoryId, Integer quantity, BigDecimal unitPrice) {
+        this.invoiceId = invoiceId;
+        this.inventoryId = inventoryId;
+        this.quantity = quantity;
+        this.unitPrice = unitPrice;
+    }
+
     public Integer getInvoiceItemId() {
         return invoiceItemId;
     }

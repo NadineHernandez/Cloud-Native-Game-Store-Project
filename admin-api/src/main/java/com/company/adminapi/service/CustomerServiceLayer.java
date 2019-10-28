@@ -15,23 +15,26 @@ public class CustomerServiceLayer {
     CustomerClient client;
 
     public Optional<CustomerViewModel> findCustomer(int id) {
-        return null;
+
+        return client.getCustomer(id);
     }
 
     public List<CustomerViewModel> findAllCustomers() {
-        return null;
+
+        return client.getAllCustomers();
     }
 
     public CustomerViewModel createCustomer(CustomerViewModel cvm) {
-        return null;
+
+        return client.addCustomer(cvm);
     }
 
     public void updateCustomer(CustomerViewModel cvm) {
-
+        client.updateCustomer(cvm);
     }
 
     public void deleteCustomer(int id) {
-
+        client.deleteCustomer(id);
     }
 
 }

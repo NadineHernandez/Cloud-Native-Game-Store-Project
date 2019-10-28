@@ -1,5 +1,10 @@
 package com.company.adminapi.model;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -14,6 +19,8 @@ public class LevelUpViewModel {
     private Integer levelUpId;
     private Integer customerId;
     private Integer points;
+    @JsonDeserialize(using=LocalDateDeserializer.class)
+    @JsonSerialize(using=LocalDateSerializer.class)
     private LocalDate memberDate;
 
     public LevelUpViewModel() {
@@ -21,6 +28,12 @@ public class LevelUpViewModel {
 
     public LevelUpViewModel(Integer levelUpId, Integer customerId, Integer points, LocalDate memberDate) {
         this.levelUpId = levelUpId;
+        this.customerId = customerId;
+        this.points = points;
+        this.memberDate = memberDate;
+    }
+
+    public LevelUpViewModel(Integer customerId, Integer points, LocalDate memberDate) {
         this.customerId = customerId;
         this.points = points;
         this.memberDate = memberDate;
