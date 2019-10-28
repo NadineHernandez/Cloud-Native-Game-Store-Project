@@ -1,5 +1,4 @@
-package com.company.levelupservice.controller;
-
+package com.company.retailapi.controller;
 
 import org.springframework.hateoas.mediatype.vnderrors.VndErrors;
 import org.springframework.http.HttpStatus;
@@ -20,7 +19,7 @@ import java.util.List;
 @RestControllerAdvice
 //tells us return type
 @RequestMapping(produces = "application/vnd.error+json")
-public class LevelUpControllerExceptionHandler {
+public class RetailApiControllerExceptionHandler {
     //we're only going to handle illegal argument exception
     @ExceptionHandler(value = {IllegalArgumentException.class})
     //422 response status
@@ -48,7 +47,7 @@ public class LevelUpControllerExceptionHandler {
 
     @ExceptionHandler(value = {MethodArgumentNotValidException.class})
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
-    public ResponseEntity<VndErrors> invoiceValidationError
+    public ResponseEntity<VndErrors> retailValidationError
             (MethodArgumentNotValidException e, WebRequest request) {
         //Binding result holds the validation result()
         BindingResult result = e.getBindingResult();

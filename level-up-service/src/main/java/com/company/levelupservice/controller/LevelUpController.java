@@ -55,4 +55,17 @@ public class LevelUpController {
         serviceLayer.deleteLevelUp(id);
     }
 
+    @GetMapping(value = "/levelup/customer/{customerId}")
+    @ResponseStatus(HttpStatus.OK)
+    public LevelUpViewModel getLevelUpByCustomerId(@PathVariable int customerId){
+        try{
+            int tester = serviceLayer.getLevelUpByCustomerId(customerId).getLevelUpId();
+        } catch (Exception e){
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "No levelUp found with cutomer id: " + customerId, e
+            );
+        }
+        return serviceLayer.getLevelUpByCustomerId(customerId);
+    }
+
 }

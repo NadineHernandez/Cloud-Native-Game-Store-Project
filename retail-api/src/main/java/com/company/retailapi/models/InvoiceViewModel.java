@@ -1,4 +1,4 @@
-package com.company.invoiceservice.viewmodels;
+package com.company.retailapi.models;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -64,4 +64,14 @@ public class InvoiceViewModel {
     public int hashCode() {
         return Objects.hash(invoiceId, customerId, purchaseDate);
     }
+
+    @Override
+    public String toString() {
+        return "InvoiceViewModel{" +
+                "invoiceId=" + invoiceId +
+                ", customerId=" + customerId +
+                ", purchaseDate=" + purchaseDate +
+                '}';
+    }
 }
+

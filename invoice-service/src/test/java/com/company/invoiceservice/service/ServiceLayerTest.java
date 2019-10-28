@@ -28,7 +28,7 @@ class ServiceLayerTest {
     private void setUpInvoiceDaoMock(){
         invoiceDao = mock(InvoiceDao.class);
         Invoice invoice = new Invoice(1, LocalDate.of(2019, 7, 22));
-        invoice.setInvoice_id(1);
+        invoice.setInvoiceId(1);
 
         Invoice invoice1 = new Invoice(1, LocalDate.of(2019, 7, 22));
 
@@ -38,12 +38,13 @@ class ServiceLayerTest {
         doReturn(invoice).when(invoiceDao).createInvoice(invoice1);
         doReturn(invoice).when(invoiceDao).getInvoice(1);
         doReturn(invoices).when(invoiceDao).getAllInvoices();
+        doReturn(invoices).when(invoiceDao).getInvoicesByCustomerId(1);
     }
 
     private void setUpInvoiceItemDaoMock(){
         invoiceItemDao = mock(InvoiceItemDao.class);
         InvoiceItem invoiceItem = new InvoiceItem(1, 1, 10, new BigDecimal("10.00"));
-        invoiceItem.setInvoice_item_id(1);
+        invoiceItem.setInvoiceItemId(1);
 
         InvoiceItem invoiceItem1 = new InvoiceItem(1, 1, 10, new BigDecimal("10.00"));
 
@@ -68,7 +69,7 @@ class ServiceLayerTest {
         InvoiceViewModel invoice1 = new InvoiceViewModel(1, LocalDate.of(2019, 7, 22));
         invoice1 = serviceLayer.createInvoice(invoice1);
 
-        assertEquals(invoice1, serviceLayer.findInvoice(invoice1.getInvoice_id()));
+        assertEquals(invoice1, serviceLayer.findInvoice(invoice1.getInvoiceId()));
     }
 
     @Test
@@ -76,7 +77,7 @@ class ServiceLayerTest {
         InvoiceViewModel invoice1 = new InvoiceViewModel(1, LocalDate.of(2019, 7, 22));
         invoice1 = serviceLayer.createInvoice(invoice1);
 
-        assertEquals(invoice1, serviceLayer.findInvoice(invoice1.getInvoice_id()));
+        assertEquals(invoice1, serviceLayer.findInvoice(invoice1.getInvoiceId()));
     }
 
     @Test
@@ -104,7 +105,7 @@ class ServiceLayerTest {
         serviceLayer.createInvoice(invoice1);
 
         ArgumentCaptor<Integer> intCaptor = ArgumentCaptor.forClass(Integer.class);
-        serviceLayer.deleteInvoice(invoice1.getInvoice_id());
+        serviceLayer.deleteInvoice(invoice1.getInvoiceId());
 
         verify(invoiceDao, times(1)).deleteInvoice(intCaptor.capture());
     }
@@ -114,7 +115,7 @@ class ServiceLayerTest {
         InvoiceItemViewModel invoiceItem = new InvoiceItemViewModel(1, 1, 10, new BigDecimal("10.00"));
         invoiceItem = serviceLayer.createInvoiceItem(invoiceItem);
 
-        assertEquals(invoiceItem, serviceLayer.findInvoiceItem(invoiceItem.getInvoice_item_id()));
+        assertEquals(invoiceItem, serviceLayer.findInvoiceItem(invoiceItem.getInvoiceItemId()));
     }
 
     @Test
@@ -122,7 +123,7 @@ class ServiceLayerTest {
         InvoiceItemViewModel invoiceItem = new InvoiceItemViewModel(1, 1, 10, new BigDecimal("10.00"));
         invoiceItem = serviceLayer.createInvoiceItem(invoiceItem);
 
-        assertEquals(invoiceItem, serviceLayer.findInvoiceItem(invoiceItem.getInvoice_item_id()));
+        assertEquals(invoiceItem, serviceLayer.findInvoiceItem(invoiceItem.getInvoiceItemId()));
     }
 
     @Test
@@ -138,7 +139,7 @@ class ServiceLayerTest {
         InvoiceItemViewModel invoiceItem = new InvoiceItemViewModel(1, 1, 10, new BigDecimal("10.00"));
         invoiceItem = serviceLayer.createInvoiceItem(invoiceItem);
 
-        assertEquals(1, invoiceItemDao.getInvoiceItemsByInvoiceId(invoiceItem.getInvoice_item_id()).size());
+        assertEquals(1, invoiceItemDao.getInvoiceItemsByInvoiceId(invoiceItem.getInvoiceItemId()).size());
     }
 
     @Test
@@ -158,8 +159,16 @@ class ServiceLayerTest {
         invoiceItem = serviceLayer.createInvoiceItem(invoiceItem);
 
         ArgumentCaptor<Integer> intCaptor = ArgumentCaptor.forClass(Integer.class);
-        serviceLayer.deleteInvoiceItem(invoiceItem.getInvoice_item_id());
+        serviceLayer.deleteInvoiceItem(invoiceItem.getInvoiceItemId());
 
         verify(invoiceItemDao, times(1)).deleteInvoiceItem(intCaptor.capture());
+    }
+
+    @Test
+    void getInvoicesByCustomerId(){
+        InvoiceViewModel invoice1 = new InvoiceViewModel(1, LocalDate.of(2019, 7, 22));
+        serviceLayer.createInvoice(invoice1);
+
+        assertEquals(1, serviceLayer.getInvoicesByCustomerId(invoice1.getCustomerId()).size());
     }
 }

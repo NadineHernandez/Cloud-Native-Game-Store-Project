@@ -38,10 +38,10 @@ public class InvoiceItemDaoImplementation implements InvoiceItemDao{
 
     @Override
     public InvoiceItem createInvoiceItem(InvoiceItem invoiceItem) {
-        jdbcTemplate.update(INSERT_INVOICE_ITEM_SQL, invoiceItem.getInvoice_id(), invoiceItem.getInventory_id(),
-                invoiceItem.getQuantity(), invoiceItem.getUnit_price());
+        jdbcTemplate.update(INSERT_INVOICE_ITEM_SQL, invoiceItem.getInvoiceId(), invoiceItem.getInventoryId(),
+                invoiceItem.getQuantity(), invoiceItem.getUnitPrice());
         int id = jdbcTemplate.queryForObject("select last_insert_id()", Integer.class);
-        invoiceItem.setInvoice_item_id(id);
+        invoiceItem.setInvoiceItemId(id);
         return invoiceItem;
     }
 
@@ -66,8 +66,8 @@ public class InvoiceItemDaoImplementation implements InvoiceItemDao{
 
     @Override
     public void updateInvoiceItem(InvoiceItem invoiceItem) {
-        jdbcTemplate.update(UPDATE_INVOICE_ITEM_SQL, invoiceItem.getInvoice_id(), invoiceItem.getInventory_id(),
-                invoiceItem.getQuantity(), invoiceItem.getUnit_price(), invoiceItem.getInvoice_item_id());
+        jdbcTemplate.update(UPDATE_INVOICE_ITEM_SQL, invoiceItem.getInvoiceId(), invoiceItem.getInventoryId(),
+                invoiceItem.getQuantity(), invoiceItem.getUnitPrice(), invoiceItem.getInvoiceItemId());
     }
 
     @Override
@@ -78,11 +78,11 @@ public class InvoiceItemDaoImplementation implements InvoiceItemDao{
 
     private InvoiceItem mapToRowInvoiceItem(ResultSet rs, int rowNum)throws SQLException{
         InvoiceItem invoiceItem = new InvoiceItem();
-        invoiceItem.setInvoice_item_id(rs.getInt("invoice_item_id"));
-        invoiceItem.setInvoice_id(rs.getInt("invoice_id"));
-        invoiceItem.setInventory_id(rs.getInt("inventory_id"));
+        invoiceItem.setInvoiceItemId(rs.getInt("invoice_item_id"));
+        invoiceItem.setInvoiceId(rs.getInt("invoice_id"));
+        invoiceItem.setInventoryId(rs.getInt("inventory_id"));
         invoiceItem.setQuantity(rs.getInt("quantity"));
-        invoiceItem.setUnit_price(rs.getBigDecimal("unit_price"));
+        invoiceItem.setUnitPrice(rs.getBigDecimal("unit_price"));
 
         return invoiceItem;
     }
