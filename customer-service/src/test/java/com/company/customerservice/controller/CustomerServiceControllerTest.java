@@ -47,7 +47,7 @@ class CustomerServiceControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().json(outputJson));
 
-        mockMvc.perform(get("/product/9999"))
+        mockMvc.perform(get("/customer/9999"))
                 .andExpect(status().isNotFound());
 
     }
