@@ -30,7 +30,7 @@ class LevelUpServiceLayerTest {
     void findLevelUp() {
         LevelUpViewModel luvm = new LevelUpViewModel(10001, 101,50, LocalDate.of(2019,7,22));
         when(client.getLevelUp(luvm.getLevelUpId())).thenReturn(Optional.of(luvm));
-        assertEquals(luvm, service.findLevelUp(luvm.getLevelUpId()));
+        assertEquals(Optional.of(luvm), service.findLevelUp(luvm.getLevelUpId()));
 
 
     }

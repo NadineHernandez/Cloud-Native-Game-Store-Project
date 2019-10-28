@@ -12,15 +12,18 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.cloud.autoconfigure.RefreshAutoConfiguration;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
+import javax.sql.DataSource;
 import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
 import static org.mockito.Mockito.when;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -30,6 +33,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(ProductController.class)
 @ImportAutoConfiguration(RefreshAutoConfiguration.class)
 class ProductControllerTest {
+
+    @MockBean
+    DataSource dataSource;
 
     @MockBean
     ProductServiceLayer service;
@@ -44,28 +50,90 @@ class ProductControllerTest {
     }
 
     @Test
+    @WithMockUser(username="adminUser", roles = {"ADMIN"})
     void getProduct() throws Exception {
         ProductViewModel pvm = new ProductViewModel(1,"Chair", "Sit On", new BigDecimal("9.99"), new BigDecimal("0.99"));
         when(service.findProduct(pvm.getProductId())).thenReturn(Optional.of(pvm));
         String outputJson = mapper.writeValueAsString(pvm);
-        mockMvc.perform(get("/product/1"))
+        mockMvc.perform(get("/product/1")
+                .with(csrf().asHeader()))
                 .andExpect(status().isOk())
                 .andExpect(content().json(outputJson));
     }
 
     @Test
+    @WithMockUser(username="adminUser", roles = {"ADMIN"})
     void getAllProducts() throws Exception{
         ProductViewModel pvm = new ProductViewModel(1,"Chair", "Sit On", new BigDecimal("9.99"), new BigDecimal("0.99"));
         List<ProductViewModel> pvms = Collections.singletonList(pvm);
         when(service.findAllProducts()).thenReturn(pvms);
         String outputJson = mapper.writeValueAsString(pvms);
-        mockMvc.perform(get("/product"))
+        mockMvc.perform(get("/product")
+                .with(csrf().asHeader()))
                 .andExpect(status().isOk())
                 .andExpect(content().json(outputJson));
     }
 
     @Test
+    @WithMockUser(username="adminUser", roles = {"ADMIN"})
     void addProduct() throws Exception{
+        ProductViewModel pvm = new ProductViewModel(1,"Chair", "Sit On", new BigDecimal("9.99"), new BigDecimal("0.99"));
+        ProductViewModel pvm2 = new ProductViewModel("Chair", "Sit On", new BigDecimal("9.99"), new BigDecimal("0.99"));
+        when(service.createProduct(pvm2)).thenReturn(pvm);
+        String inputJson = mapper.writeValueAsString(pvm2);
+        String outputJson = mapper.writeValueAsString(pvm);
+        mockMvc.perform(post("/product")
+                .with(csrf().asHeader())
+                .content(inputJson)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isCreated())
+                .andExpect(content().json(outputJson));
+    }
+
+    @Test
+    @WithMockUser(username="adminUser", roles = {"ADMIN"})
+    void updateProduct() throws Exception {
+        ProductViewModel pvm = new ProductViewModel(1,"Chair", "Sit On", new BigDecimal("9.99"), new BigDecimal("0.99"));
+        String inputJson = mapper.writeValueAsString(pvm);
+        mockMvc.perform(put("/product")
+                .with(csrf().asHeader())
+                .content(inputJson)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNoContent());
+    }
+
+    @Test
+    @WithMockUser(username="adminUser", roles = {"ADMIN"})
+    void deleteProduct() throws Exception{
+
+        mockMvc.perform(delete("/product/1")
+                .with(csrf().asHeader()))
+                .andExpect(status().isNoContent());
+    }
+
+    //copies of tests with no auth
+
+    @Test
+    void getProductNoAuth() throws Exception {
+        ProductViewModel pvm = new ProductViewModel(1, "Chair", "Sit On", new BigDecimal("9.99"), new BigDecimal("0.99"));
+        when(service.findProduct(pvm.getProductId())).thenReturn(Optional.of(pvm));
+        String outputJson = mapper.writeValueAsString(pvm);
+        mockMvc.perform(get("/product/1"))
+                .andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    void getAllProductsNoAuth() throws Exception{
+        ProductViewModel pvm = new ProductViewModel(1,"Chair", "Sit On", new BigDecimal("9.99"), new BigDecimal("0.99"));
+        List<ProductViewModel> pvms = Collections.singletonList(pvm);
+        when(service.findAllProducts()).thenReturn(pvms);
+        String outputJson = mapper.writeValueAsString(pvms);
+        mockMvc.perform(get("/product"))
+                .andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    void addProductNoAuth() throws Exception{
         ProductViewModel pvm = new ProductViewModel(1,"Chair", "Sit On", new BigDecimal("9.99"), new BigDecimal("0.99"));
         ProductViewModel pvm2 = new ProductViewModel("Chair", "Sit On", new BigDecimal("9.99"), new BigDecimal("0.99"));
         when(service.createProduct(pvm2)).thenReturn(pvm);
@@ -74,24 +142,23 @@ class ProductControllerTest {
         mockMvc.perform(post("/product")
                 .content(inputJson)
                 .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isCreated())
-                .andExpect(content().json(outputJson));
+                .andExpect(status().isForbidden());
     }
 
     @Test
-    void updateProduct() throws Exception {
+    void updateProductNoAuth() throws Exception {
         ProductViewModel pvm = new ProductViewModel(1,"Chair", "Sit On", new BigDecimal("9.99"), new BigDecimal("0.99"));
         String inputJson = mapper.writeValueAsString(pvm);
         mockMvc.perform(put("/product")
                 .content(inputJson)
                 .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isNoContent());
+                .andExpect(status().isForbidden());
     }
 
     @Test
-    void deleteProduct() throws Exception{
+    void deleteProductNoAuth() throws Exception{
 
         mockMvc.perform(delete("/product/1"))
-                .andExpect(status().isNoContent());
+                .andExpect(status().isForbidden());
     }
 }

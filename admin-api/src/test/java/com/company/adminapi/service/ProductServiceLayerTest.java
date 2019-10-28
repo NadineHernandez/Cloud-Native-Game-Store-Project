@@ -29,7 +29,7 @@ class ProductServiceLayerTest {
     void findProduct() {
         ProductViewModel pvm = new ProductViewModel(1,"Chair", "Sit On", new BigDecimal("9.99"), new BigDecimal("0.99"));
         when(client.getProduct(pvm.getProductId())).thenReturn(Optional.of(pvm));
-        assertEquals(pvm, service.findProduct(pvm.getProductId()));
+        assertEquals(Optional.of(pvm), service.findProduct(pvm.getProductId()));
     }
 
     @Test

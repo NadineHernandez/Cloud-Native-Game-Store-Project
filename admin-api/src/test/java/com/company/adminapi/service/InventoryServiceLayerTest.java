@@ -28,7 +28,7 @@ class InventoryServiceLayerTest {
     void findInventory() {
         InventoryViewModel ivm = new InventoryViewModel(1001, 1,10);
         when(client.getInventory(ivm.getInventoryId())).thenReturn(Optional.of(ivm));
-        assertEquals(ivm, service.findInventory(ivm.getInventoryId()));
+        assertEquals(Optional.of(ivm), service.findInventory(ivm.getInventoryId()));
     }
 
     @Test

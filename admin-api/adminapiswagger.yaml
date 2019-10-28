@@ -1,0 +1,525 @@
+openapi: 3.0.0
+info:
+  title: Game Store
+  description: Admin API for Game Store
+  version: 0.0.1
+paths:
+  /customer:
+    get:
+      summary: get all customers
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                type: array
+                items: 
+                  $ref: "#/components/schemas/customer"
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/customer"
+      summary: add customer
+      responses:
+        201:
+          description: created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/customer"
+        400:
+          description: bad request
+        422:
+          description: unprocessable entity
+    put:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/customer"
+      summary: edit a customer
+      responses:
+        204:
+          description: no content
+        400:
+          description: bad request
+        422:
+          description: unprocessable entity
+  /customer/{id}:
+    get:
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      summary: get a customer
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/customer"
+        404:
+          description: not found
+    delete:
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      summary: delete a customer
+      responses:
+          204:
+            description: no content
+    
+  /inventory:
+    get:
+      summary: get all inventories
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                type: array
+                items: 
+                  $ref: "#/components/schemas/inventory"
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/inventory"
+      summary: add inventory
+      responses:
+        201:
+          description: created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/inventory"
+        400:
+          description: bad request
+        422:
+          description: unprocessable entity
+    put:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/inventory"
+      summary: edit an inventory
+      responses:
+        204:
+          description: no content
+        400:
+          description: bad request
+        422:
+          description: unprocessable entity
+  /inventory/{id}:
+    get:
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      summary: get an inventory
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/inventory"
+        404:
+          description: not found
+    delete:
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      summary: delete an inventory
+      responses:
+          204:
+            description: no content
+  /invoice:
+    get:
+      summary: get all invoices
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                type: array
+                items: 
+                  $ref: "#/components/schemas/invoice"
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/invoice"
+      summary: add invoice
+      responses:
+        201:
+          description: created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/invoice"
+        400:
+          description: bad request
+        422:
+          description: unprocessable entity
+    put:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/invoice"
+      summary: edit an invoice
+      responses:
+        204:
+          description: no content
+        400:
+          description: bad request
+        422:
+          description: unprocessable entity
+  /invoice/{id}:
+    get:
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      summary: get an invoice
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/invoice"
+        404:
+          description: not found
+    delete:
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      summary: delete an invoice
+      responses:
+          204:
+            description: no content
+  /invoiceitem:
+    get:
+      summary: get all invoice items
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                type: array
+                items: 
+                  $ref: "#/components/schemas/invoiceItem"
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/invoiceItem"
+      summary: add invoice item
+      responses:
+        201:
+          description: created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/invoiceItem"
+        400:
+          description: bad request
+        422:
+          description: unprocessable entity
+    put:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/invoiceItem"
+      summary: edit an invoice item
+      responses:
+        204:
+          description: no content
+        400:
+          description: bad request
+        422:
+          description: unprocessable entity
+  /invoiceitem/{id}:
+    get:
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      summary: get an invoice item
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/invoiceItem"
+        404:
+          description: not found
+    delete:
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      summary: delete an invoice item
+      responses:
+          204:
+            description: no content
+  /levelup:
+    get:
+      summary: get all levelup
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                type: array
+                items: 
+                  $ref: "#/components/schemas/levelUp"
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/levelUp"
+      summary: add levelup
+      responses:
+        201:
+          description: created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/levelUp"
+        400:
+          description: bad request
+        422:
+          description: unprocessable entity
+    put:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/levelUp"
+      summary: edit a levelup
+      responses:
+        204:
+          description: no content
+        400:
+          description: bad request
+        422:
+          description: unprocessable entity
+  /levelup/{id}:
+    get:
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      summary: get a levelup
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/levelUp"
+        404:
+          description: not found
+    delete:
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      summary: delete a levelup
+      responses:
+          204:
+            description: no content
+  /product:
+    get:
+      summary: get all products
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                type: array
+                items: 
+                  $ref: "#/components/schemas/product"
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/product"
+      summary: add product
+      responses:
+        201:
+          description: created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/product"
+        400:
+          description: bad request
+        422:
+          description: unprocessable entity
+    put:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/product"
+      summary: edit a product
+      responses:
+        204:
+          description: no content
+        400:
+          description: bad request
+        422:
+          description: unprocessable entity
+  /product/{id}:
+    get:
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      summary: get a product
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/product"
+        404:
+          description: not found
+    delete:
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      summary: delete an product
+      responses:
+          204:
+            description: no content
+components:
+  schemas:
+    customer:
+      type: object
+      properties:
+        customerId:
+          type: integer
+        firstName:
+          type: string
+        lastName:
+          type: string
+        street:
+          type: string
+        city:
+          type: string
+        zip:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+    inventory:
+      type: object
+      properties:
+        inventoryId:
+          type: integer
+        productId:
+          type: integer
+        quantity:
+          type: integer
+    invoice:
+      type: object
+      properties:
+        invoiceId:
+          type: integer
+        customerId:
+          type: integer
+        purchaseDate:
+          type: string
+    levelUp:
+      type: object
+      properties:
+        levelUpId:
+          type: integer
+        customerId:
+          type: integer
+        points:
+          type: integer
+        memberDate:
+          type: string
+    invoiceItem:
+      type: object
+      properties:
+        invoiceItemId:
+          type: integer
+        invoiceId:
+          type: integer
+        inventoryId: 
+          type: integer
+        quantity:
+          type: integer
+        unitPrice:
+          type: number
+    product:
+      type: object
+      properties:
+        productId:
+          type: integer
+        productName:
+          type: string
+        productDescription:
+          type: string
+        listPrice:
+          type: number
+        unitCost:
+          type: number
+    
+        
+            
+              

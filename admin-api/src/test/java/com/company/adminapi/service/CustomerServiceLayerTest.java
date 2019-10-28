@@ -28,7 +28,7 @@ class CustomerServiceLayerTest {
     void findCustomer() {
         CustomerViewModel cvm = new CustomerViewModel(101,"John", "Doe", "123 Abc Street", "Atlanta", "11111", "john@doe.com", "555-5555");
         when(client.getCustomer(cvm.getCustomerId())).thenReturn(Optional.of(cvm));
-        assertEquals(cvm, service.findCustomer(cvm.getCustomerId()));
+        assertEquals(Optional.of(cvm), service.findCustomer(cvm.getCustomerId()));
 
     }
 

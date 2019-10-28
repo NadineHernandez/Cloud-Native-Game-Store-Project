@@ -31,7 +31,7 @@ class InvoiceServiceLayerTest {
     void findInvoice() {
         InvoiceViewModel ivm = new InvoiceViewModel(100001, 101, LocalDate.of(2019, 7, 22));
         when(client.getInvoice(ivm.getInvoiceId())).thenReturn(Optional.of(ivm));
-        assertEquals(ivm, service.findInvoice(ivm.getInvoiceId()));
+        assertEquals(Optional.of(ivm), service.findInvoice(ivm.getInvoiceId()));
 
     }
 
@@ -74,7 +74,7 @@ class InvoiceServiceLayerTest {
     void findInvoiceItem() {
         InvoiceItemViewModel iivm = new InvoiceItemViewModel(1000001, 100001, 1001, 10, new BigDecimal("10.00"));
         when(client.getInvoiceItem(1000001)).thenReturn(Optional.of(iivm));
-        assertEquals(iivm, service.findInvoiceItem(iivm.getInvoiceItemId()));
+        assertEquals(Optional.of(iivm), service.findInvoiceItem(iivm.getInvoiceItemId()));
     }
 
     @Test
