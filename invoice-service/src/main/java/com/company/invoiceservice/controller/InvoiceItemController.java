@@ -33,7 +33,7 @@ public class InvoiceItemController {
     @ResponseStatus(HttpStatus.OK)
     public InvoiceItemViewModel getInvoiceItem(@PathVariable int id){
         try{
-            int tester = serviceLayer.findInvoiceItem(id).getInvoice_item_id();
+            int tester = serviceLayer.findInvoiceItem(id).getInvoiceItemId();
         } catch (Exception e){
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND, "No Invoice Items found with id: " + id, e
@@ -45,7 +45,7 @@ public class InvoiceItemController {
     @GetMapping(value = "/invoiceitem/invoice/{invoiceId}")
     public List<InvoiceItemViewModel> getInvoiceItemsByInvoiceId(@PathVariable int invoiceId){
         try{
-            int tester = serviceLayer.findInvoice(invoiceId).getInvoice_id();
+            int tester = serviceLayer.findInvoice(invoiceId).getInvoiceId();
         } catch (Exception e){
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND, "No Invoices found matching id: " + invoiceId, e

@@ -69,4 +69,12 @@ class LevelUpDaoTest {
         lvlUpDao.deleteLevelUp(levelUp.getLevelUpId());
         assertNull(lvlUpDao.getLevelUp(levelUp.getLevelUpId()));
     }
+
+    @Test
+    void getLevelUpByCustomerId(){
+        LevelUp levelUp = new LevelUp(1,50, LocalDate.of(2019,7,22));
+        levelUp = lvlUpDao.createLevelUp(levelUp);
+
+        assertEquals(levelUp, lvlUpDao.getLevelUpByCustomerId(levelUp.getCustomerId()));
+    }
 }

@@ -7,49 +7,49 @@ import java.math.BigDecimal;
 import java.util.Objects;
 
 public class InvoiceItem {
-    private int invoice_item_id;
+    private int invoiceItemId;
     @NotNull
-    private Integer invoice_id;
+    private Integer invoiceId;
     @NotNull
-    private Integer inventory_id;
+    private Integer inventoryId;
     @NotNull
     private Integer quantity;
     @NotNull
     @Digits(integer = 7, fraction = 2, message = "Incorrect price format")
     @Min(0)
-    private BigDecimal unit_price;
+    private BigDecimal unitPrice;
 
-    public InvoiceItem(Integer invoice_id, Integer inventory_id, Integer quantity, BigDecimal unit_price) {
-        this.invoice_id = invoice_id;
-        this.inventory_id = inventory_id;
+    public InvoiceItem(Integer invoiceId, Integer inventoryId, Integer quantity, BigDecimal unitPrice) {
+        this.invoiceId = invoiceId;
+        this.inventoryId = inventoryId;
         this.quantity = quantity;
-        this.unit_price = unit_price;
+        this.unitPrice = unitPrice;
     }
 
     public InvoiceItem(){}
 
-    public int getInvoice_item_id() {
-        return invoice_item_id;
+    public int getInvoiceItemId() {
+        return invoiceItemId;
     }
 
-    public void setInvoice_item_id(int invoice_item_id) {
-        this.invoice_item_id = invoice_item_id;
+    public void setInvoiceItemId(int invoiceItemId) {
+        this.invoiceItemId = invoiceItemId;
     }
 
-    public Integer getInvoice_id() {
-        return invoice_id;
+    public Integer getInvoiceId() {
+        return invoiceId;
     }
 
-    public void setInvoice_id(Integer invoice_id) {
-        this.invoice_id = invoice_id;
+    public void setInvoiceId(Integer invoiceId) {
+        this.invoiceId = invoiceId;
     }
 
-    public Integer getInventory_id() {
-        return inventory_id;
+    public Integer getInventoryId() {
+        return inventoryId;
     }
 
-    public void setInventory_id(Integer inventory_id) {
-        this.inventory_id = inventory_id;
+    public void setInventoryId(Integer inventoryId) {
+        this.inventoryId = inventoryId;
     }
 
     public Integer getQuantity() {
@@ -60,12 +60,12 @@ public class InvoiceItem {
         this.quantity = quantity;
     }
 
-    public BigDecimal getUnit_price() {
-        return unit_price;
+    public BigDecimal getUnitPrice() {
+        return unitPrice;
     }
 
-    public void setUnit_price(BigDecimal unit_price) {
-        this.unit_price = unit_price;
+    public void setUnitPrice(BigDecimal unitPrice) {
+        this.unitPrice = unitPrice;
     }
 
     @Override
@@ -73,26 +73,26 @@ public class InvoiceItem {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         InvoiceItem that = (InvoiceItem) o;
-        return invoice_item_id == that.invoice_item_id &&
-                invoice_id.equals(that.invoice_id) &&
-                inventory_id.equals(that.inventory_id) &&
+        return invoiceItemId == that.invoiceItemId &&
+                invoiceId.equals(that.invoiceId) &&
+                inventoryId.equals(that.inventoryId) &&
                 quantity.equals(that.quantity) &&
-                unit_price.equals(that.unit_price);
+                unitPrice.equals(that.unitPrice);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(invoice_item_id, invoice_id, inventory_id, quantity, unit_price);
+        return Objects.hash(invoiceItemId, invoiceId, inventoryId, quantity, unitPrice);
     }
 
     @Override
     public String toString() {
         return "InvoiceItem{" +
-                "invoice_item_id=" + invoice_item_id +
-                ", invoice_id=" + invoice_id +
-                ", inventory_id=" + inventory_id +
+                "invoice_item_id=" + invoiceItemId +
+                ", invoice_id=" + invoiceId +
+                ", inventory_id=" + inventoryId +
                 ", quantity=" + quantity +
-                ", unit_price=" + unit_price +
+                ", unit_price=" + unitPrice +
                 '}';
     }
 }
